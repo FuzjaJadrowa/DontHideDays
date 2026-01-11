@@ -8,7 +8,7 @@ version="${version}"
 displayName="Don't Hide My Days"
 logoFile="icon.png"
 authors="FuzjaJadrowa"
-description="'Simple mod that separates local difficulty and day counter in F3 menu.'"
+description="Simple mod that separates local difficulty and day counter in F3 menu."
 
 [[dependencies.donthidedays]]
 modId="neoforge"

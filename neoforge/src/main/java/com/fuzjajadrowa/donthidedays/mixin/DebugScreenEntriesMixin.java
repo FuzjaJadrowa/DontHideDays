@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashMap;
@@ -33,18 +34,41 @@ public abstract class DebugScreenEntriesMixin {
         DAYS_ID = register("days", new DebugEntryDays());
     }
 
-    private static Map<Object, Object> injectIntoProfiles(Object k1, Object v1, Object k2, Object v2) {
+    @Redirect(
+            method = "<clinit>",
+            at = @At(value = "INVOKE", target = "Ljava/util/Map;of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;")
+    )
+    private static Map<Object, Object> injectIntoDefaultProfile(
+            Object k1, Object v1, Object k2, Object v2, Object k3, Object v3,
+            Object k4, Object v4, Object k5, Object v5, Object k6, Object v6,
+            Object k7, Object v7, Object k8, Object v8, Object k9, Object v9) {
 
-        Map<Identifier, DebugScreenEntryStatus> defaultMap = new HashMap<>((Map<Identifier, DebugScreenEntryStatus>) v1);
+        Map<Object, Object> map = new HashMap<>();
+        map.put(k1, v1); map.put(k2, v2); map.put(k3, v3);
+        map.put(k4, v4); map.put(k5, v5); map.put(k6, v6);
+        map.put(k7, v7); map.put(k8, v8); map.put(k9, v9);
+
         if (DAYS_ID != null) {
-            defaultMap.put(DAYS_ID, DebugScreenEntryStatus.ALWAYS_ON);
+            map.put(DAYS_ID, DebugScreenEntryStatus.ALWAYS_ON);
         }
+        return Map.copyOf(map);
+    }
 
-        Map<Identifier, DebugScreenEntryStatus> perfMap = new HashMap<>((Map<Identifier, DebugScreenEntryStatus>) v2);
+    @Redirect(
+            method = "<clinit>",
+            at = @At(value = "INVOKE", target = "Ljava/util/Map;of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;")
+    )
+    private static Map<Object, Object> injectIntoPerformanceProfile(
+            Object k1, Object v1, Object k2, Object v2, Object k3, Object v3,
+            Object k4, Object v4, Object k5, Object v5) {
+
+        Map<Object, Object> map = new HashMap<>();
+        map.put(k1, v1); map.put(k2, v2); map.put(k3, v3);
+        map.put(k4, v4); map.put(k5, v5);
+
         if (DAYS_ID != null) {
-            perfMap.put(DAYS_ID, DebugScreenEntryStatus.ALWAYS_ON);
+            map.put(DAYS_ID, DebugScreenEntryStatus.ALWAYS_ON);
         }
-
-        return Map.of(k1, Map.copyOf(defaultMap), k2, Map.copyOf(perfMap));
+        return Map.copyOf(map);
     }
 }

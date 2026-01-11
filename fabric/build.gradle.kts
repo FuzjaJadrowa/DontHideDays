@@ -1,12 +1,30 @@
 plugins {
-    id("fabric-loom") version("1.13.6")
+    id("fabric-loom")
 }
 
-val MINECRAFT_VERSION: String by rootProject.extra
-val FABRIC_LOADER_VERSION: String by rootProject.extra
+val minecraft_version: String by project
+val fabric_loader_version: String by project
+
+base {
+    archivesName.set("DontHideDays-fabric")
+}
 
 dependencies {
-    minecraft("com.mojang:minecraft:${MINECRAFT_VERSION}")
+    minecraft("com.mojang:minecraft:${minecraft_version}")
     mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}")
+    modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
+}
+
+tasks.processResources {
+    val replaceProperties = mapOf(
+        "version" to project.version,
+        "minecraft_version" to rootProject.extra["minecraft_version"],
+        "loader_version" to rootProject.extra["fabric_loader_version"]
+    )
+
+    inputs.properties(replaceProperties)
+
+    filesMatching("fabric.mod.json") {
+        expand(replaceProperties)
+    }
 }
