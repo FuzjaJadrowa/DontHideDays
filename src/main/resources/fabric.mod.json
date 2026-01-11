@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "donthidedays",
+	"version": "${version}",
+	"name": "Don't Hide My Days",
+	"description": "Simple mod that separates local difficulty and day counter in F3 menu.",
+	"authors": [],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/donthidedays/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.fuzjajadrowa.donthidedays.DontHideMyDays"
+		],
+		"client": [
+			"com.fuzjajadrowa.donthidedays.DontHideMyDays"
+		]
+	},
+	"mixins": [
+		"donthidedays.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "${minecraft_version}"
+	}
+}
