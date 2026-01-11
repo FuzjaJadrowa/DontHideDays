@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="*"
+license="MIT"
+
+[[mods]]
+modId="donthidedays"
+version="${version}"
+displayName="Don't Hide My Days"
+logoFile="icon.png"
+authors="FuzjaJadrowa"
+description="'Simple mod that separates local difficulty and day counter in F3 menu.'"
+
+[[dependencies.donthidedays]]
+modId="neoforge"
+type="required"
+versionRange="[21.11.0-beta,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.donthidedays]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.11,]"
+ordering="NONE"
+side="BOTH"
+
+[[mixins]]
+config="donthidedays.mixins.json"

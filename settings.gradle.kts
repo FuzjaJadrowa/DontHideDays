@@ -1,0 +1,12 @@
+rootProject.name = "DontHideDays"
+
+pluginManagement {
+    repositories {
+        maven { url = uri("https://maven.fabricmc.net/") }
+        maven { url = uri("https://maven.neoforged.net/releases/") }
+        gradlePluginPortal()
+    }
+}
+
+include("fabric")
+include("neoforge")
